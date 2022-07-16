@@ -19,7 +19,7 @@ const Navbar = () => {
       initial={{ opacity: 0, y: -100 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1 }}>
-      <div className='navbar bg-primary text-primary-content h-20 w-screen '>
+      <div className='navbar bg-neutral text-primary-content h-20 w-screen '>
         <div className='flex-1'>
           <Link to='/' className='btn btn-ghost normal-case text-xl'>
             Supabase
@@ -29,13 +29,13 @@ const Navbar = () => {
           {!loggedIn ? (
             <Link
               to='/login'
-              className='btn btn-secondary normal-case text-lg w-24 '>
+              className='btn btn-primary normal-case text-lg w-24 '>
               Login
             </Link>
           ) : (
             <button
               onClick={handleLogout}
-              className='btn btn-secondary normal-case text-lg w-auto '>
+              className='btn btn-primary normal-case text-lg w-auto '>
               Sign Out
             </button>
           )}
