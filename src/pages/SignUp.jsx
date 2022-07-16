@@ -31,7 +31,7 @@ const SignUp = () => {
   }
   const submitHandler = async (e) => {
     e.preventDefault()
-    const id = toast.loading('Creating Account...')
+    // const id = toast.loading('Creating Account...')
     console.log('id: ', id)
     console.log('details: ', details)
     const { user, session, error } = await supabase.auth.signUp(
@@ -50,22 +50,10 @@ const SignUp = () => {
     console.log('error: ', error)
     if (user) {
       setModalOpen(true)
-      toast.update(id, {
-        render: 'Confirmation Email Sent',
-        type: 'success',
-        isLoading: false,
-        autoClose: 3000,
-        closeButton: true,
-      })
+      toast.success('Account Created!')
     }
     if (error) {
-      toast.update(id, {
-        render: 'Confirmation Email Sent',
-        type: 'success',
-        isLoading: false,
-        autoClose: 3000,
-        closeButton: true,
-      })
+      toast.error(error.message)
       console.log('error: ', error)
     }
   }

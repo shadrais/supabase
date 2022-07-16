@@ -40,24 +40,12 @@ const Login = () => {
 
     //do something else
     if (user) {
-      //   toast.update(id, {
-      //     render: 'Signed In',
-      //     type: 'success',
-      //     isLoading: false,
-      //     autoClose: 3000,
-      //     closeButton: true,
-      //   })
+      toast.success('Signed In!')
       setLoggedIn(true)
       navigate('/')
     }
     if (error) {
-      //   toast.update(id, {
-      //     render: error.message,
-      //     type: 'error',
-      //     isLoading: false,
-      //     autoClose: 3000,
-      //     closeButton: true,
-      //   })
+      toast.error(error.message)
       console.log('error: ', error)
     }
   }
