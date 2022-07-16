@@ -40,7 +40,7 @@ const Login = () => {
 
     //do something else
     if (user) {
-      //   toast.success('Signed In!')
+      toast.success('Signed In!')
       setLoggedIn(true)
       navigate('/')
     }
