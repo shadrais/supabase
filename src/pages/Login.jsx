@@ -28,7 +28,7 @@ const Login = () => {
   }
   const submitHandler = async (e) => {
     e.preventDefault()
-    const id = toast.loading('Signing In...')
+    // const id = toast.loading('Signing In...')
     console.log('details: ', details)
     const { user, session, error } = await supabase.auth.signIn({
       email: email,
@@ -40,24 +40,24 @@ const Login = () => {
 
     //do something else
     if (user) {
-      toast.update(id, {
-        render: 'Signed In',
-        type: 'success',
-        isLoading: false,
-        autoClose: 3000,
-        closeButton: true,
-      })
+      //   toast.update(id, {
+      //     render: 'Signed In',
+      //     type: 'success',
+      //     isLoading: false,
+      //     autoClose: 3000,
+      //     closeButton: true,
+      //   })
       setLoggedIn(true)
       navigate('/')
     }
     if (error) {
-      toast.update(id, {
-        render: error.message,
-        type: 'error',
-        isLoading: false,
-        autoClose: 3000,
-        closeButton: true,
-      })
+      //   toast.update(id, {
+      //     render: error.message,
+      //     type: 'error',
+      //     isLoading: false,
+      //     autoClose: 3000,
+      //     closeButton: true,
+      //   })
       console.log('error: ', error)
     }
   }
