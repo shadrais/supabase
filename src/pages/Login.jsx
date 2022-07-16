@@ -28,8 +28,7 @@ const Login = () => {
   }
   const submitHandler = async (e) => {
     e.preventDefault()
-    // const id = toast.loading('Signing In...')
-    const toastId = toast.loading('Loading...')
+    const toastId = toast.loading('SigningIn...')
 
     console.log('details: ', details)
     const { user, session, error } = await supabase.auth.signIn({
@@ -42,10 +41,9 @@ const Login = () => {
 
     //do something else
     if (user) {
-      toast.success('This worked', {
+      toast.success('Signed In!', {
         id: toastId,
       })
-      //   toast.success('Signed In!')
       setLoggedIn(true)
       navigate('/')
     }
@@ -53,7 +51,6 @@ const Login = () => {
       toast.error(error.message, {
         id: toastId,
       })
-      //   toast.error(error.message)
       console.log('error: ', error)
     }
   }

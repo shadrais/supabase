@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { supabase } from '../client'
 import { useStore } from '../useStore'
-import { toast } from 'react-toastify'
+import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import Modal from '../components/Modal'
 
@@ -31,8 +31,7 @@ const SignUp = () => {
   }
   const submitHandler = async (e) => {
     e.preventDefault()
-    // const id = toast.loading('Creating Account...')
-    console.log('id: ', id)
+    const toastId = toast.loading('SigningUp...')
     console.log('details: ', details)
     const { user, session, error } = await supabase.auth.signUp(
       {
@@ -49,11 +48,15 @@ const SignUp = () => {
     console.log('session: ', session)
     console.log('error: ', error)
     if (user) {
+      toast.success('Confirmation Email Sent!', {
+        id: toastId,
+      })
       setModalOpen(true)
-      toast.success('Account Created!')
     }
     if (error) {
-      toast.error(error.message)
+      toast.error(error.message, {
+        id: toastId,
+      })
       console.log('error: ', error)
     }
   }
