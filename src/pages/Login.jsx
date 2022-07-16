@@ -40,12 +40,12 @@ const Login = () => {
 
     //do something else
     if (user) {
-      toast.success('Signed In!')
+      //   toast.success('Signed In!')
       setLoggedIn(true)
       navigate('/')
     }
     if (error) {
-      toast.error(error.message)
+      //   toast.error(error.message)
       console.log('error: ', error)
     }
   }
