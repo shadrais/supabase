@@ -11,7 +11,9 @@ const Login = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}>
-      <form onSubmit={submitHandler} className='card w-96 bg-neutral shadow-xl'>
+      <form
+        onSubmit={submitHandler}
+        className='card w-11/12 bg-neutral shadow-xl md:w-96 sm:mx-4'>
         <div className='card-body grid place-items-center'>
           <h2 className='card-title text-3xl mb-4 '>Login</h2>
           <div className='form-control flex gap-6'>
