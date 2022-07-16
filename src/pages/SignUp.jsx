@@ -2,57 +2,65 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { supabase } from '../client'
 import { useStore } from '../useStore'
-import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
+import Modal from '../components/Modal'
 
-const Login = () => {
+const SignUp = () => {
   const navigate = useNavigate()
+
   const [details, setDetails] = useState({
     email: '',
     password: '',
+    name: '',
   })
-  const setLoggedIn = useStore((state) => state.setLoggedIn)
   const loggedIn = useStore((state) => state.loggedIn)
-
+  const setModalOpen = useStore((state) => state.setModalOpen)
+  const modalOpen = useStore((state) => state.modalOpen)
   useEffect(() => {
     if (loggedIn) {
       navigate('/')
     }
   })
 
-  const { email, password } = details
+  const { email, password, name } = details
 
   const handleChange = (e) => {
     setDetails({ ...details, [e.target.name]: e.target.value })
   }
   const submitHandler = async (e) => {
     e.preventDefault()
-    const id = toast.loading('Signing In...')
+    const id = toast.loading('Creating Account...')
+    console.log('id: ', id)
     console.log('details: ', details)
-    const { user, session, error } = await supabase.auth.signIn({
-      email: email,
-      password: password,
-    })
+    const { user, session, error } = await supabase.auth.signUp(
+      {
+        email: email,
+        password: password,
+      },
+      {
+        data: {
+          name: name,
+        },
+      }
+    )
     console.log('user: ', user)
     console.log('session: ', session)
     console.log('error: ', error)
-
-    //do something else
     if (user) {
+      setModalOpen(true)
       toast.update(id, {
-        render: 'Signed In',
+        render: 'Confirmation Email Sent',
         type: 'success',
         isLoading: false,
         autoClose: 3000,
         closeButton: true,
       })
-      setLoggedIn(true)
-      navigate('/')
     }
     if (error) {
       toast.update(id, {
-        render: error.message,
-        type: 'error',
+        render: 'Confirmation Email Sent',
+        type: 'success',
         isLoading: false,
         autoClose: 3000,
         closeButton: true,
@@ -67,16 +75,27 @@ const Login = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}>
+      {modalOpen && <Modal email={email} />}
       <form
         onSubmit={submitHandler}
         className='card w-11/12 bg-neutral shadow-xl md:w-96 sm:mx-4'>
         <div className='card-body grid place-items-center'>
-          <h2 className='card-title text-3xl mb-4 '>Login</h2>
+          <h2 className='card-title text-3xl mb-4 '>Sign Up</h2>
           <div className='form-control flex gap-6'>
+            <label className='input-group'>
+              <span>Name</span>
+              <input
+                value={name}
+                name='name'
+                onChange={handleChange}
+                type='text'
+                placeholder='John Doe'
+                className='input input-bordered w-full'
+              />
+            </label>
             <label className='input-group'>
               <span>Email</span>
               <input
-                required
                 value={email}
                 name='email'
                 onChange={handleChange}
@@ -88,7 +107,6 @@ const Login = () => {
             <label className='input-group'>
               <span>Password</span>
               <input
-                required
                 value={password}
                 name='password'
                 onChange={handleChange}
@@ -107,12 +125,12 @@ const Login = () => {
             </motion.button>
             <div className='grid place-items-center'>
               <motion.div
-                onClick={() => navigate('/signup')}
+                onClick={() => navigate('/login')}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 type='submit'
                 className='link link-primary'>
-                Don't have an account? SignUp
+                Already have an account? Login
               </motion.div>
             </div>
           </div>
@@ -122,4 +140,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default SignUp
