@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { supabase } from '../client'
 import { useStore } from '../useStore'
 import { useNavigate } from 'react-router-dom'
-import { toast } from 'react-toastify'
+import toast from 'react-hot-toast'
 
 const Login = () => {
   const navigate = useNavigate()
@@ -29,6 +29,8 @@ const Login = () => {
   const submitHandler = async (e) => {
     e.preventDefault()
     // const id = toast.loading('Signing In...')
+    const toastId = toast.loading('Loading...')
+
     console.log('details: ', details)
     const { user, session, error } = await supabase.auth.signIn({
       email: email,
@@ -40,11 +42,17 @@ const Login = () => {
 
     //do something else
     if (user) {
-      toast.success('Signed In!')
+      toast.success('This worked', {
+        id: toastId,
+      })
+      //   toast.success('Signed In!')
       setLoggedIn(true)
       navigate('/')
     }
     if (error) {
+      toast.error(error.message, {
+        id: toastId,
+      })
       //   toast.error(error.message)
       console.log('error: ', error)
     }

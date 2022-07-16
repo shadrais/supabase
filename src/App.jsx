@@ -7,7 +7,8 @@ import Navbar from './components/Navbar'
 import SignUp from './pages/SignUp'
 import Login from './pages/Login'
 import Home from './pages/Home'
-import { ToastContainer } from 'react-toastify'
+// import { ToastContainer } from 'react-toastify'
+import { Toaster } from 'react-hot-toast'
 import 'react-toastify/dist/ReactToastify.css'
 
 const App = () => {
@@ -29,7 +30,7 @@ const App = () => {
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<SignUp />} />
       </Routes>
-      <ToastContainer />
+      <Toaster />
     </Router>
   )
 }
