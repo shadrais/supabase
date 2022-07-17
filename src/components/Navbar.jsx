@@ -4,13 +4,18 @@ import { Link } from 'react-router-dom'
 import { useStore } from '../useStore'
 import { supabase } from '../client'
 
+import { useNavigate } from 'react-router-dom'
 const Navbar = () => {
+
+  const navigate = useNavigate()
+
   const loggedIn = useStore((state) => state.loggedIn)
   const setLoggedIn = useStore((state) => state.setLoggedIn)
 
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut()
     setLoggedIn(false)
+    navigate('/login')
   }
 
   return (

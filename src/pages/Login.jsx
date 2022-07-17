@@ -3,10 +3,11 @@ import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { supabase } from '../client'
+import ButtonLoader from '../assets/ButtonLoader.gif'
 import { useStore } from '../useStore'
 
 function Login() {
-
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
   const [details, setDetails] = useState({
     email: '',
@@ -30,7 +31,7 @@ function Login() {
   const submitHandler = async (e) => {
     e.preventDefault()
     const toastId = toast.loading('SigningIn...')
-
+    setLoading(true)
     console.log('details: ', details)
     const { user, session, error } = await supabase.auth.signIn({
       email,
@@ -49,11 +50,13 @@ function Login() {
       })
       setLoggedIn(true)
       navigate('/')
+      setLoading(false)
     }
     if (error) {
       toast.error(error.message, {
         id: toastId,
       })
+      setLoading(false)
       console.log('error: ', error)
     }
   }
@@ -103,7 +106,7 @@ function Login() {
               type="submit"
               className="btn btn-primary w-full"
             >
-              Login
+              {loading ? (<img src={ButtonLoader} alt="ButtonLoader" height={10} />) : 'Login'}
             </motion.button>
             <div className="grid place-items-center">
               <motion.div

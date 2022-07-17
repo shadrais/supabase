@@ -3,26 +3,17 @@ import { supabase } from '../client'
 import { useStore } from '../useStore'
 
 const useAuthStatus = () => {
-  const isMounted = useRef(true)
   const [checkingStatus, setCheckingStatus] = useState(true)
-
-  const setLoggedIn = useStore((state) => state.setLoggedIn)
+  const [loggedIn, setLoggedIn] = useState(false)
 
   useEffect(() => {
-    if (isMounted) {
-      supabase.auth.onAuthStateChange((event, session) => {
-        if (session) {
-          setLoggedIn(true)
-        }
-      })
-      setCheckingStatus(false)
+    const session = supabase.auth.session()
+    if (session) {
+      console.log('Session found, logged in', session)
+      setLoggedIn(true)
     }
-
-    return () => {
-      isMounted.current = false
-    }
-  }, [isMounted])
-
+    setCheckingStatus(false)
+  }, [])
   return { loggedIn, checkingStatus }
 }
 

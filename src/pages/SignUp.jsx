@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../client';
 import { useStore } from '../useStore';
+
 import Modal from '../components/Modal';
 
 function SignUp() {
