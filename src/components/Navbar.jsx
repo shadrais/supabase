@@ -29,15 +29,22 @@ const Navbar = () => {
           {!loggedIn ? (
             <Link
               to='/login'
-              className='btn btn-primary normal-case text-lg w-24 '>
+              className='btn btn-primary normal-case text-lg w-auto '>
               Login
             </Link>
           ) : (
-            <button
-              onClick={handleLogout}
-              className='btn btn-primary normal-case text-lg w-auto '>
-              Sign Out
-            </button>
+            <>
+              <Link
+                to='/profile'
+                className='btn btn-primary normal-case text-lg w-auto mr-4 '>
+                My Profile
+              </Link>
+              <button
+                onClick={handleLogout}
+                className='btn btn-primary normal-case text-lg w-auto '>
+                Sign Out
+              </button>
+            </>
           )}
         </div>
       </div>
