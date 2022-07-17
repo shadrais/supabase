@@ -4,13 +4,18 @@ import { Link } from 'react-router-dom'
 import { useStore } from '../useStore'
 import { supabase } from '../client'
 
+import { useNavigate } from 'react-router-dom'
 const Navbar = () => {
+
+  const navigate = useNavigate()
+
   const loggedIn = useStore((state) => state.loggedIn)
   const setLoggedIn = useStore((state) => state.setLoggedIn)
 
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut()
     setLoggedIn(false)
+    navigate('/login')
   }
 
   return (
@@ -29,15 +34,22 @@ const Navbar = () => {
           {!loggedIn ? (
             <Link
               to='/login'
-              className='btn btn-primary normal-case text-lg w-24 '>
+              className='btn btn-primary normal-case text-lg w-auto '>
               Login
             </Link>
           ) : (
-            <button
-              onClick={handleLogout}
-              className='btn btn-primary normal-case text-lg w-auto '>
-              Sign Out
-            </button>
+            <>
+              <Link
+                to='/profile'
+                className='btn btn-primary normal-case text-lg w-auto mr-4 '>
+                My Profile
+              </Link>
+              <button
+                onClick={handleLogout}
+                className='btn btn-primary normal-case text-lg w-auto '>
+                Sign Out
+              </button>
+            </>
           )}
         </div>
       </div>

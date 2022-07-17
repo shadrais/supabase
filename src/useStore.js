@@ -5,6 +5,8 @@ export const useStore = create((set) => ({
   setLoggedIn: (loggedIn) => set((state) => ({ loggedIn })),
   modalOpen: false,
   setModalOpen: (modalOpen) => set((state) => ({ modalOpen })),
+  user: {},
+  setUser: (user) => set((state) => ({ user })),
   //   bears: 0,
   // increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
   // removeAllBears: () => set({ bears: 0 }),
