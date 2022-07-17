@@ -15,10 +15,10 @@ function Home() {
 
   return (
     <div className="grid place-items-center h-screen w-screen">
-      <div className="text-center">
+      {user && <div className="text-center">
         <span className="text-2xl">Welcome Back </span>
-        <span className='text-2xl text-stone-700'>{user.user_metadata.name}</span>
-      </div>
+        <span className='text-2xl text-stone-700'>{user?.user_metadata?.name}</span>
+      </div>}
     </div>
   );
 }
