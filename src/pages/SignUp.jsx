@@ -4,12 +4,12 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../client';
 import { useStore } from '../useStore';
-
+import ButtonLoader from '../assets/ButtonLoader.gif'
 import Modal from '../components/Modal';
 
 function SignUp() {
   const navigate = useNavigate();
-
+  const [loading, setLoading] = useState(false);
   const [details, setDetails] = useState({
     email: '',
     password: '',
@@ -31,6 +31,7 @@ function SignUp() {
   };
   const submitHandler = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const toastId = toast.loading('SigningUp...');
     console.log('details: ', details);
     const { user, session, error } = await supabase.auth.signUp(
@@ -51,12 +52,14 @@ function SignUp() {
       toast.success('Confirmation Email Sent!', {
         id: toastId,
       });
+      setLoading(false);
       setModalOpen(true);
     }
     if (error) {
       toast.error(error.message, {
         id: toastId,
       });
+      setLoading(false);
       console.log('error: ', error);
     }
   };
@@ -116,7 +119,7 @@ function SignUp() {
               type="submit"
               className="btn btn-primary w-full"
             >
-              Login
+              {loading ? <img src={ButtonLoader} alt="loader" /> : 'Sign Up'}
             </motion.button>
             <div className="grid place-items-center">
               <motion.div
